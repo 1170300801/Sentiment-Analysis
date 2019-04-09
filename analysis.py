@@ -9,7 +9,6 @@ f = open('wordic.txt')
 #neg = open('negsentence.txt','wb')
 #neu = open('neusentence.txt','wb')
 p = open('wordicout.txt')
-w = open('result.txt','wb')
 fpos = open('pnn_annotated.txt')
 dic = []
 dicout = []
@@ -47,7 +46,7 @@ for line in p:
     dicout.append(int(line.strip('\n')))
 
 ration = 0
-'''
+
 for line in pos:
     total = 0
     words = jieba.cut(line)
@@ -55,7 +54,7 @@ for line in pos:
         if word in dic:
             total += dicout[dic.index(word)]
 
-    if total >= 3:
+    if total > 5:
         ration += 1
 
 print('pos correct ration: ', ration/50.0)
@@ -68,11 +67,11 @@ for line in neg:
         if word in dic:
             total += dicout[dic.index(word)]
 
-    if total <= -3:
+    if total < -5:
         ration += 1
 
 print('neg correct ration: ', ration/50.0)
-'''
+
 ration = 0
 for line in neu:
     total = 0
@@ -80,12 +79,8 @@ for line in neu:
     for word in words:
         if word in dic:
             total += dicout[dic.index(word)]
-            print(word)
-            print(dicout[dic.index(word)])
-    print(total)
-    print("")
 
-    if total > -3 and total < 3:
+    if total >= -5 and total <= 5:
         ration += 1
 
 print('neu correct ration: ', ration/50.0)
