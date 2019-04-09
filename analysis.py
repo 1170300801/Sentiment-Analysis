@@ -47,7 +47,7 @@ for line in p:
     dicout.append(int(line.strip('\n')))
 
 ration = 0
-
+'''
 for line in pos:
     total = 0
     words = jieba.cut(line)
@@ -72,7 +72,7 @@ for line in neg:
         ration += 1
 
 print('neg correct ration: ', ration/50.0)
-
+'''
 ration = 0
 for line in neu:
     total = 0
@@ -80,6 +80,10 @@ for line in neu:
     for word in words:
         if word in dic:
             total += dicout[dic.index(word)]
+            print(word)
+            print(dicout[dic.index(word)])
+    print(total)
+    print("")
 
     if total > -3 and total < 3:
         ration += 1

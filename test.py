@@ -3,14 +3,14 @@ import math
 import jieba
 import sys  
 reload(sys)  
-sys.setdefaultencoding('utf8')   
+sys.setdefaultencoding('utf-8')   
 fpos = open('pnn_annotated.txt')
-dicstop = open('stopwords.dic')
+dicstop = open('result.txt','r')
 dictotal = []
 dic1 = []
 dic2 = []
-dicstop = []
 dic = []
+print(dicstop)
 
 cout = 0
 for line in fpos:
@@ -25,6 +25,8 @@ for line in fpos:
         elif word not in dicstop and num < 0:
             dic2.append(word)
             dictotal.append(word)
+        if word in dicstop:
+            print("yes")
 
 f = open('wordic.txt','wb')
 p = open('wordicout.txt','wb')
