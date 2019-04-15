@@ -5,9 +5,6 @@ import jieba
 reload(sys)  
 sys.setdefaultencoding('utf8')   
 f = open('wordic.txt')
-#pos = open('possentence.txt','wb')
-#neg = open('negsentence.txt','wb')
-#neu = open('neusentence.txt','wb')
 p = open('wordicout.txt')
 fpos = open('pnn_annotated.txt')
 dic = []
@@ -17,6 +14,10 @@ coutneg = 0
 coutneu = 0
 
 '''
+pos = open('possentence.txt','wb')
+neg = open('negsentence.txt','wb')
+neu = open('neusentence.txt','wb')
+
 for line in fpos:
     line = line.strip('\n')
     num = int(line[0:2])
@@ -30,10 +31,10 @@ for line in fpos:
     else:
         neg.write(line[1:] + '\n')
         coutneg += 1
+pos.close
+neg.close
+neu.close
 '''
-#pos.close
-#neg.close
-#neu.close
 
 pos = open('possentence.txt')
 neg = open('negsentence.txt')
@@ -45,22 +46,28 @@ for line in f:
 for line in p:
     dicout.append(int(line.strip('\n')))
 
-ration = 0
+num = 100
 
+ration = 0
+cout = 0
 for line in pos:
+    cout += 1
     total = 0
     words = jieba.cut(line)
     for word in words:
         if word in dic:
-            total += dicout[dic.index(word)]
+            total += dicout[dic.index(word)]    # 计算句子的情感得分
 
     if total > 5:
         ration += 1
-
-print('pos correct ration: ', ration/50.0)
+    if cout > num:
+            break
+print('pos correct ration: ', ration/ (num * 1.0))
 
 ration = 0
+cout = 0
 for line in neg:
+    cout += 1
     total = 0
     words = jieba.cut(line)
     for word in words:
@@ -69,11 +76,16 @@ for line in neg:
 
     if total < -5:
         ration += 1
+    if cout > num:
+        break
 
-print('neg correct ration: ', ration/50.0)
 
+print('neg correct ration: ', ration/ (num * 1.0))
+
+cout = 0
 ration = 0
 for line in neu:
+    cout += 1
     total = 0
     words = jieba.cut(line)
     for word in words:
@@ -82,5 +94,8 @@ for line in neu:
 
     if total >= -5 and total <= 5:
         ration += 1
+    if cout > num:
+            break
 
-print('neu correct ration: ', ration/50.0)
+
+print('neu correct ration: ', ration/ (num * 1.0))

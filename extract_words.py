@@ -3,7 +3,8 @@ import math
 import jieba
 import sys  
 reload(sys)  
-sys.setdefaultencoding('utf-8')   
+sys.setdefaultencoding('utf-8')    # 中文编码不友好
+
 fpos = open('pnn_annotated.txt')
 dicstop = open('stopwords.txt','r')
 dictotal = []
@@ -12,7 +13,7 @@ dic2 = []
 dic = []
 stop = []
 
-for line in dicstop:
+for line in dicstop:        #将停用词读入
     line = line.strip('\r\n')
     stop.append(line)
 
@@ -23,14 +24,12 @@ for line in fpos:
     line = line[2:]
     words = jieba.cut(line)
     for word in words:
-        if word not in stop and num > 0:
+        if word not in stop and num > 0:    # pos句子中的词加入dic1
             dic1.append(word)
             dictotal.append(word)
-        elif word not in stop and num < 0:
+        elif word not in stop and num < 0:  # neg句子中的词加入dic2
             dic2.append(word)
             dictotal.append(word)
-        if word in stop:
-            print("yes")
 
 f = open('wordic.txt','wb')
 p = open('wordicout.txt','wb')
@@ -40,8 +39,9 @@ for i in range(len(dic)):
     total = dic1.count(dic[i]) + dic2.count(dic[i])
     differ = dic1.count(dic[i]) - dic2.count(dic[i])
     weight = int(pow(3, float(pow(abs(differ), 1.0/3) * abs(differ)) / total))
-    
-    if total == 1:
+    # 自己随便试的一个公式，使各单词权值有区分度且不会过大
+
+    if total == 1:          # 出现次数过少，直接忽略
         f.write(dic[i] + '\n')
         p.write(str(differ) + '\n')
 
