@@ -13,6 +13,7 @@ coutpos = 0
 coutneg = 0
 coutneu = 0
 
+# 将所给例句按照三种情感分开写在txt文件中
 '''
 pos = open('possentence.txt','wb')
 neg = open('negsentence.txt','wb')
@@ -46,7 +47,8 @@ for line in f:
 for line in p:
     dicout.append(int(line.strip('\n')))
 
-num = 100
+# 测试num个句子的准确率
+num = 50
 
 ration = 0
 cout = 0
