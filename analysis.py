@@ -48,7 +48,7 @@ for line in p:
     dicout.append(int(line.strip('\n')))
 
 # 测试num个句子的准确率
-num = 50
+num = 300
 
 ration = 0
 cout = 0

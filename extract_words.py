@@ -51,7 +51,6 @@ for i in range(len(dic)):
             p.write(' ' + str(weight) + '\n')
         else:
             p.write('0' + '\n')
-
     
     elif differ < -1:
         f.write(dic[i] + '\n')
